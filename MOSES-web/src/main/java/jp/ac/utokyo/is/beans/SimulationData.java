@@ -23,7 +23,8 @@ public interface SimulationData {
 	final int numOfFacilities = 3;
 	final double loadingCapacity = 3125;
 	final double bunkeringCapacityOthers = 104;
-	final double bunkeringCapacityTruck = 10.4;
+	final double bunkeringCapacityShip = 94;
+	final double bunkeringCapacityTruck = 21;
 	final double berthingFee = 520;
 	final double[][] routeMatrix = {{0, 12800, 6400},{12800, 0, 6400}, {6400, 6400, 0}};
 	
