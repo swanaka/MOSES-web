@@ -168,7 +168,7 @@ var showGraph = function(xAxis, yAxis){
 var exportData = function(){
 	var href = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(HISTORY));
 	var link = document.createElement('a');
-	link.download = "data.json";
+	link.download = "team2.json";
 	link.href = href;
 	link.click();
 }
