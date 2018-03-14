@@ -6,7 +6,8 @@ var MAP = [
 	{'label': 'NOx Emission rate', 'units': 'ton/ton*km', 'key':'no'},
 	{'label': 'SOx Emission rate', 'units': 'ton/ton*km', 'key':'so'},
 	{'label': 'Waiting time rate', 'units': '%', 'key':'wait'},
-]
+];
+var HISTORY = [];
 var TABLE;
 $(function(){
 	showGraph(MAP[1].label, MAP[0].label);
@@ -41,29 +42,36 @@ var submit = function(){
 	json.bunkeringMethodAtSingapore = bunkeringMethodAtSingapore;
 	
 	console.log(json);
-	
-	$.ajax({
-        type:"post",                
-        url:"./simulation",        
-        data:JSON.stringify(json), 
-        contentType: 'application/json', 
-        dataType: "json",           
-        success: function(data) {   
-          console.log(data);
-          alert('Simulation success.')
-          addData(data);
-          updateTable();
-        }
-    });
+	if(1*numOfHFO + 1*numOfLSFO + 1*numOfLNG + 1*numOfHFOLNG != 20){
+		alert('Error: Total number of ships should be 20.');
+	}else if((1*numOfLNG + 1*numOfHFOLNG > 0) && (numOfBunkeringFacilitiesAtPersianGulf*1 + numOfBunkeringFacilitiesAtSingapore*1 == 0 || numOfBunkeringFacilitiesAtJapan*1 + numOfBunkeringFacilitiesAtSingapore*1 == 0)){
+		alert('Error: Only LNG facilities at Persian Gulf, or only LNG facilities at Japan cannot realize thie shipping system.');
+	}else{ 
+		$.ajax({
+			type:"post",                
+			url:"./simulation",        
+			data:JSON.stringify(json), 
+			contentType: 'application/json', 
+			dataType: "json",           
+			success: function(data) {   
+			  console.log(data);
+			  alert('Simulation success.')
+			  addData(json, data);
+			  updateTable();
+			  record('simulation', json, data);
+			}
+		});
+	}
 	
 }
 
-var addData = function(data){
+var addData = function(input, output){
 	cleaned_data = {};
-	$.each(data, function(index, val){
+	$.each(output, function(index, val){
 		cleaned_data[index] = (+val).toExponential(2);
 	})
-	DATA.push(cleaned_data);
+	data = $.extend({}, input, cleaned_data);
+	DATA.push(data);
 	console.log(DATA);
 }
 var updateTradespace = function(){
@@ -77,6 +85,7 @@ var updateTradespace = function(){
 		if(item.key == ykey) return true;
 	})[0].label;
 	showGraph(xlabel, ylabel);
+	record('showTradespace', [xlabel, ylabel], '');
 }
 var updateTable = function(){
 	TABLE.clear();
@@ -155,5 +164,16 @@ var showGraph = function(xAxis, yAxis){
 	    },
 	    series: data
 	});
-	
+}
+var exportData = function(){
+	var href = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(HISTORY));
+	var link = document.createElement('a');
+	link.download = "data.json";
+	link.href = href;
+	link.click();
+}
+
+var record = function(action, input, output){
+	var date = new Date( jQuery . now() ) . toLocaleString();
+	HISTORY.push({'action': action, 'input': input, 'output': output, 'date':date});
 }

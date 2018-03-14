@@ -4,6 +4,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+<title>MOSES Web</title>
 </head>
 <body>
 	<div class="container">
@@ -109,7 +110,7 @@
 			<div class="row" >
 				<table id="datatable" class="display">
 				<thead>
-					<tr><th>No.</th><th>Initial cost[M$]</th><th>Fuel efficiency[$/ton*km]</th><th>CO2 Emission[ton/ton*km]</th><th>NOx Emission[ton/ton*km]</th><th>SOx Emission[ton/ton*km]</th><th>Waiting time ratio[%]</th></tr>
+					<tr><th>No.</th><th>Initial cost [M$]</th><th>Fuel efficiency [$/ton*km]</th><th>CO2 [ton/ton*km]</th><th>NOx [ton/ton*km]</th><th>SOx [ton/ton*km]</th><th>Waiting time [%]</th></tr>
 				</thead>
 				<tbody></tbody>
 				</table>
@@ -135,6 +136,7 @@
 			<button type="button" class="btn btn-primary" onclick="updateTradespace()">Update</button>
 			<div class="row" id="container" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
 		</div>
+		<button type="button" class="btn btn-primary" onclick="exportData()">Export</button>
 	</div>
     
     
