@@ -34,4 +34,4 @@ If you succeed it, you can run the project "MOSES-web" as Spring boot app.
 Please try it on eclipse.
 
 ### Demo
-![result](https://github.com/swanaka/MOSES-web/blob/media/XXXX.gif)
+![result](https://github.com/swanaka/MOSES-web/blob/media/MOSES_web.gif)
