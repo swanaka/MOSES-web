@@ -101,6 +101,9 @@ public class SimulationLogic implements SimulationData{
 		if(bunkeringMethod.equals("Truck to Ship")) {
 			bunkeringCapacityLNG = bunkeringCapacityTruck;
 		}
+		if(bunkeringMethod.equals("Ship to Ship")) {
+			bunkeringCapacityLNG = bunkeringCapacityShip;
+		}
 		for(int j = 0; j < numOfFacilities; j++){
 			List<FuelType> fuelTypeList = new ArrayList<FuelType>();
 			List<Double> bunkeringCapacityList = new ArrayList<Double>();
