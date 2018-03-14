@@ -14,6 +14,9 @@ $(function(){
 	$(document).ready( function () {
 		TABLE = $('#datatable').DataTable();
 	} );
+	$(window).on('beforeunload', function(e){
+		return 'All of your data will be lost';
+	});
 });
 var submit = function(){
 	var numOfHFO = $('[name=numOfHFO]').val()
