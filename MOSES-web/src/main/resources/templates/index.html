@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+</head>
+<body>
+	<div class="container">
+		<div id="input-forms">
+			<h2>Fleet configuration</h2>
+			<div class="row">
+				<div class="col-xs-3">
+				<label class="control-label"># of HFO fueled ships: </label>
+				<select class="selectpicker" name="numOfHFO">
+					<option value="0">0</option>
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+				</select>
+				</div>
+				<div class="col-xs-3">
+				<label class="control-label"># of LSFO fueled ships: </label>
+				<select class="selectpicker" name="numOfLSFO">
+					<option value="0">0</option>
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+				</select>
+				</div>
+				<div class="col-xs-3">
+				<label class="control-label"># of LNG fueled ships: </label>
+				<select class="selectpicker" name="numOfLNG">
+					<option value="0">0</option>
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+				</select>
+				</div>
+				<div class="col-xs-3">
+				<label class="control-label"># of dual fueled ships(HFO + LNG): </label>
+				<select class="selectpicker" name="numOfHFOLNG">
+					<option value="0">0</option>
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+				</select>
+				</div>
+			</div>
+			<h2>Ports configuration</h2>
+			<div class="row">
+				<div class="col-xs-4">
+					<h3>Persian Gulf</h3>
+					<label class="control-label"># of LNG bunkering facilities: </label>
+					<select class="selectpicker" name="numOfBunkeringFacilitiesAtPersianGulf">
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="3">3</option>
+					</select>
+					<br>
+					<br>
+					<label class="control-label">LNG bunkering method: </label>
+					<div class="radio"><label><input type="radio" name="bunkeringMethodAtPersianGulf" value="Shore to Ship" checked>Shore to Ship</input></label></div>
+					<div class="radio"><label><input type="radio" name="bunkeringMethodAtPersianGulf" value="Ship to Ship">Ship to Ship</input></label></div>
+					<div class="radio"><label><input type="radio" name="bunkeringMethodAtPersianGulf" value="Truck to Ship">Truck to Ship</input></label></div>
+				</div>
+				<div class="col-xs-4">
+					<h3>Japan</h3>
+					<label class="control-label"># of LNG bunkering facilities: </label>
+					<select class="selectpicker" name="numOfBunkeringFacilitiesAtJapan">
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="3">3</option>
+					</select>
+					<br>
+					<br>
+					<label class="control-label">LNG bunkering method: </label>
+					<div class="radio"><label><input type="radio" name="bunkeringMethodAtJapan" value="Shore to Ship" checked>Shore to Ship</input></label></div>
+					<div class="radio"><label><input type="radio" name="bunkeringMethodAtJapan" value="Ship to Ship">Ship to Ship</input></label></div>
+					<div class="radio"><label><input type="radio" name="bunkeringMethodAtJapan" value="Truck to Ship">Truck to Ship</input></label></div>
+				</div>
+				<div class="col-xs-4">
+					<h3>Singapore</h3>
+					<label class="control-label"># of LNG bunkering facilities: </label>
+					<select class="selectpicker" name="numOfBunkeringFacilitiesAtSingapore">
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="3">3</option>
+					</select>
+					<br>
+					<br>
+					<label class="control-label">LNG bunkering method: </label>
+					<div class="radio"><label><input type="radio" name="bunkeringMethodAtSingapore" value="Shore to Ship" checked>Shore to Ship</input></label></div>
+					<div class="radio"><label><input type="radio" name="bunkeringMethodAtSingapore" value="Ship to Ship">Ship to Ship</input></label></div>
+					<div class="radio"><label><input type="radio" name="bunkeringMethodAtSingapore" value="Truck to Ship">Truck to Ship</input></label></div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<button type="button" class="btn btn-primary" onclick="submit()">Simulation</button>
+			</div>
+		</div>
+		<br>
+		<div id="tradespace">
+			<div class="row" >
+				<table id="datatable" class="display">
+				<thead>
+					<tr><th>No.</th><th>Initial cost[M$]</th><th>Fuel efficiency[$/ton*km]</th><th>CO2 Emission[ton/ton*km]</th><th>NOx Emission[ton/ton*km]</th><th>SOx Emission[ton/ton*km]</th><th>Waiting time ratio[%]</th></tr>
+				</thead>
+				<tbody></tbody>
+				</table>
+			</div>
+			<label>X axis: </label>
+			<select class="selectpicker" name="xAxis">
+				<option value="ic">Initial cost</option>
+				<option value="fe">Fuel efficiency</option>
+				<option value="co">Emission CO2</option>
+				<option value="no">Emission NOx</option>
+				<option value="so">Emission SOx</option>
+				<option value="wait">Waiting Time</option>
+			</select>
+			<label>Y axis: </label>
+			<select class="selectpicker" name="yAxis">
+				<option value="ic">Initial cost</option>
+				<option value="fe">Fuel efficiency</option>
+				<option value="co">Emission CO2</option>
+				<option value="no">Emission NOx</option>
+				<option value="so">Emission SOx</option>
+				<option value="wait">Waiting Time</option>
+			</select>
+			<button type="button" class="btn btn-primary" onclick="updateTradespace()">Update</button>
+			<div class="row" id="container" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+		</div>
+	</div>
+    
+    
+</body>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="index.js"></script>
+</html>
