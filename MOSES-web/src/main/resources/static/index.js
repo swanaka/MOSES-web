@@ -10,7 +10,7 @@ var MAP = [
 var HISTORY = [];
 var TABLE;
 $(function(){
-	showGraph(MAP[1].label, MAP[0].label);
+	//showGraph(MAP[1].label, MAP[0].label);
 	$(document).ready( function () {
 		TABLE = $('#datatable').DataTable();
 	} );
@@ -168,7 +168,7 @@ var showGraph = function(xAxis, yAxis){
 var exportData = function(){
 	var href = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(HISTORY));
 	var link = document.createElement('a');
-	link.download = "data.json";
+	link.download = "team1.json";
 	link.href = href;
 	link.click();
 }
