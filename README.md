@@ -29,3 +29,6 @@ Unix
 4. Configure build path of Moses-web.
   - Right click "MOSES-web" on Eclipse and select [Build Path]
   - Add ship-simulation as [Projects].
+
+If you succeed it, you can run the project "MOSES-web" as Spring boot app.
+Please try it on eclipse.
