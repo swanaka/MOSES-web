@@ -105,67 +105,81 @@ var updateTable = function(){
 	TABLE.draw();
 }
 var showGraph = function(xAxis, yAxis){
-	var xunit = MAP.filter(function(item, index){
-		if(item.label == xAxis) return true;
-	})[0].units;
-	console.log(xunit);
 	var xkey = MAP.filter(function(item, index){
 		if(item.label == xAxis) return true;
 	})[0].key;
 	var ykey = MAP.filter(function(item, index){
 		if(item.label == yAxis) return true;
 	})[0].key;
-	var yunit = MAP.filter(function(item, index){
-		if(item.label == yAxis) return true;
-	})[0].units;
-	var data =[]
-	$.each(DATA, function(index, val){
-		console.log(val);
-		var id = index +1;
-		var x = +val[xkey];
-		var y = +val[ykey];
-		var data_elem = [[x, y]];
-		data.push({name: id, data: data_elem, marker:{symbol: 'circle'}});
-	});
-	console.log(data);
-	Highcharts.chart('container', {
-	    chart: {type: 'scatter',　zoomType: 'xy'},
-	    title: {text: 'Tradespace'},
-	    xAxis: {title: {enabled: true, text:  xAxis + '(' + xunit + ')'},
-	    		min: 0,
-	        startOnTick: true,
-	        endOnTick: true,
-	        showLastLabel: true
-	    },
-	    yAxis: {
-	        title: {text: yAxis + '(' + yunit + ')'},
-	    		min: 0,
-			startOnTick: true,
-			endOnTick: true,
-			showLastLabel: true
-	    },
-	    legend:{
-	    		enabled: false,
-	    },
-	    plotOptions: {
-	        scatter: 
-	        		{
-	        			marker: {radius: 5, states: { hover: {enabled: true, lineColor: 'rgb(100,100,100)'}}
-	        		},
-	            states: {
-	                hover: {
-	                    marker: {
-	                        enabled: false
-	                    }
-	                }
-	            },
-	            tooltip: {
-	                headerFormat: '<b>{series.name}</b><br>',
-	                pointFormat: '{point.x} ('+xunit+'), {point.y} ('+yunit+')'
-	            }
-	        }
-	    },
-	    series: data
+	theoretical = [];
+	var filename = xkey+'_'+ykey+'.json';
+	console.log(filename);
+	
+	$.getJSON("./data/"+filename , function(data) {
+		var ulObj = $("#demo"), len = data.length;
+		$.each(data, function(index, val){
+			if(index != 0 ){
+				var x = +val[0];
+				var y = +val[1];
+				theoretical.push([x, y]);
+			}
+		});
+		var data = [];
+		data.push({name: 'Theoretical', data: theoretical, marker:{symbol: 'circle', fillColor: '#ececec', linecolor: '#ececec'}});
+		var xunit = MAP.filter(function(item, index){
+			if(item.label == xAxis) return true;
+		})[0].units;
+		console.log(xunit);
+		var yunit = MAP.filter(function(item, index){
+			if(item.label == yAxis) return true;
+		})[0].units;
+		$.each(DATA, function(index, val){
+			console.log(val);
+			var id = index +1;
+			var x = +val[xkey];
+			var y = +val[ykey];
+			var data_elem = [[x, y]];
+			data.push({name: id, data: data_elem, marker:{symbol: 'circle'}});
+		});
+		Highcharts.chart('container', {
+			chart: {type: 'scatter',　zoomType: 'xy'},
+			title: {text: 'Tradespace'},
+			xAxis: {title: {enabled: true, text:  xAxis + '(' + xunit + ')'},
+					min: 0,
+				startOnTick: true,
+				endOnTick: true,
+				showLastLabel: true
+			},
+			yAxis: {
+				title: {text: yAxis + '(' + yunit + ')'},
+					min: 0,
+				startOnTick: true,
+				endOnTick: true,
+				showLastLabel: true
+			},
+			legend:{
+					enabled: false,
+			},
+			plotOptions: {
+				scatter: 
+						{
+							marker: {radius: 5, states: { hover: {enabled: true, lineColor: 'rgb(100,100,100)'}}
+						},
+					states: {
+						hover: {
+							marker: {
+								enabled: false
+							}
+						}
+					},
+					tooltip: {
+						headerFormat: '<b>{series.name}</b><br>',
+						pointFormat: '{point.x} ('+xunit+'), {point.y} ('+yunit+')'
+					}
+				}
+			},
+			series: data
+		});
 	});
 }
 var exportData = function(){
